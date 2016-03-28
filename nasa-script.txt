@@ -1,0 +1,29 @@
+Hi all,
+
+I'm currently integrating Cygwin into an automated build environment where all installers need to operate entirely unattended. I appreciate that setup.exe doesn't yet support this fully, but in the mean time I've been attempting to develop a usable workaround.
+
+I did get the sources for setup.exe and managed to build it, but my initial attempt to add an --all flag failed -- I got the impression that the code was a little unwelcoming to minor alterations. I did get further with the following hack:
+
+  1. Download /setup.exe/ from the cygwin web site <http://cygwin.com/>.
+  2. Run the installer conventionally, choosing the options for
+     downloading to a local directory without installing anything. Make
+     sure you have everything set to 'Install' in the choose packages
+     page.
+  3. Run the following /sed/ script over the downloaded /setup.ini/ file:
+
+cp setup.ini setup.ini-backup
+sed "s/[cC]ategory:.*/Category: Base/" < setup.ini > setup.temp
+mv setup.temp setup.ini
+
+This now leaves you with a 'canned' version of Cygwin that will install from the command line as follows:
+
+setup.exe -q --local-install --root c:\where\you\want\to\put\cygwin -l c:\path\to\installer\directory
+
+Note that the paths you give to setup.exe need to be Windows paths, /not/ Cygwin paths.
+
+The installer seems to work as expected, entirely 'hands-free' so-to-speak, installing the entire list of downloaded packages, but for some reason it fails to create a home directory for the currently logged in user and it fails to source the necessary profiles when Bash is started from the short cut, so the path is somewhat minimal and you just get a 'bash-3.2$' prompt rather than the usual customised version.
+
+Any help you could give in finding a workaround for this would be gratefully appreciated.
+
+Sarah Thompson
+NASA Ames Research Center
