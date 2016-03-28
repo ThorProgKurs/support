@@ -21,7 +21,7 @@ def get_format(letter, label='ProgKurs'):
 
 
 def get_robocopy(dir, letter):
-    return ['C:\\Windows\\System32\\robocopy.exe', '/MIR', dir, '%s:\\' % letter]
+    return ['C:\\Windows\\System32\\robocopy.exe', '/MIR', dir, '%s:\\ProgKurs' % letter]
 
 
 def get_removedrive(letter):
@@ -42,6 +42,7 @@ for drive in drives:
         log('Skipping drive %s' % drive)
         continue
     f.write('%s\n' % ' '.join(get_format(drive)))
+    f.write('mkdir %s:\\ProgKurs\n' % drive)
     f.write('%s\n' % ' '.join(get_robocopy(source_path, drive)))
     f.write('%s\n' % ' '.join(get_removedrive(drive)))
 f.close()
