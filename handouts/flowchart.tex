@@ -1,0 +1,61 @@
+\documentclass[page,number,smaller]{beamer}
+% \documentclass[a4paper]{article}
+
+\usepackage[UKenglish]{babel}
+%Mathekram:
+\usepackage{amsmath,amssymb,mathrsfs}
+\usepackage{enumerate}
+\usepackage{makeidx}
+\usepackage{times}
+\usepackage{multimedia}
+
+\usepackage{tikz}
+
+
+\begin{document}
+
+
+
+\tikzstyle{box} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=blue!10]
+\tikzstyle{arrow} = [line width=2pt,->,>=stealth]
+
+\vphantom{TEXT}
+
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[node distance=3cm]
+
+\node (plan) [box] {{\Large{ \textbf{Programm planen}}} };
+
+\node (code) [box, below of=plan] {\Large \textbf{Coden} };
+
+\node (compile) [box, below of=code] {\Large \textbf{Kompilieren} };
+
+\node (read) [box, left of=compile, xshift=-6cm, align=left] {\Large \textbf{Fehlermeldungen lesen} \\ \textbf{\Large und verstehen} };
+
+\node (test) [box, below of=compile, yshift=-1cm] {\Large \textbf{Programm testen}};
+
+\node (finish) [box, below of=test] {\Huge\textbf{ \reflectbox{/}o/}};
+
+\node (debug) [box, right of=test, xshift=5cm] {\Large \textbf{Debuggen}};
+
+\draw [arrow, color=green] (plan) -- (code);
+
+\draw [arrow, color=green] (code) -- (compile);
+
+\draw [arrow, color=green] (compile) -- node[anchor=west, align=left, color=black] {Es wird ohne \\ Fehler kompiliert} (test);
+
+\draw [arrow, color=red] (compile) -- node[anchor=north, align=center, color=black] {Es gibt Fehler\\oder Warnungen}(read);
+
+\draw [arrow] (read) |- node[anchor=north, align=left, xshift=3cm] {Fehler und Warnungen beheben}(code);
+
+\draw [arrow, color=green] (test) -- node[anchor=east, align=right, color=black] {Programm tut\\ was es soll} (finish);
+
+\draw [arrow] (debug) |-node[anchor=north, align=right, xshift=-2cm] {Die Fehler liegen\\im Code} (code);
+
+\draw [arrow] (debug) |- node[anchor=north, align=right, xshift=-2cm] {Die Fehler liegen\\im Algorithmus} (plan);
+
+\draw [arrow, color=red] (test) --node[anchor=north, align=center, color=black] {Programm tut\\nicht was es soll} (debug);
+
+\end{tikzpicture}
+}
+\end{document}
